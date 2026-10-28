@@ -1,9 +1,23 @@
 
-
 name: CI Lab Experiments
 
 on:
   workflow_dispatch:
+    inputs:
+      username:
+        description: "Enter your name"
+        required: true
+        default: "Student"
+        type: string
+      city:
+        description: "Select your city"
+        required: true
+        default: "Pune"
+        type: choice
+        options:
+          - Pune
+          - Mumbai
+          - Nashik
 
 jobs:
   example1:
@@ -19,18 +33,24 @@ jobs:
     name: Example 2 - Java Program
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
-
       - name: Compile Java program
         run: javac Hello.java
-
       - name: Run Java program
         run: java Hello
 
+  example3:
+    name: Example 3 - Parameterized Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display user inputs
+        env:
+          USERNAME: ${{ inputs.username }}
+          CITY: ${{ inputs.city }}
+        run: |
+          echo "Welcome $USERNAME"
+          echo "Your selected city is $CITY"
