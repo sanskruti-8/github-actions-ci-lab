@@ -1,0 +1,16 @@
+
+name: CI Lab Experiments
+
+on:
+  workflow_dispatch:
+
+jobs:
+  example1:
+    name: Example 1 - Simple Commands
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print messages
+        run: |
+          echo "Hello from GitHub Actions"
+          echo "This is my first CI build"
