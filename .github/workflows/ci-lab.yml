@@ -18,6 +18,11 @@ on:
           - Pune
           - Mumbai
           - Nashik
+      num:
+        description: "Number for multiplication table"
+        required: true
+        default: "5"
+        type: string
 
 jobs:
   example1:
@@ -54,3 +59,25 @@ jobs:
         run: |
           echo "Welcome $USERNAME"
           echo "Your selected city is $CITY"
+    
+  example4:
+    name: Example 4 - Java Multiplication Table
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Compile Table.java
+        run: javac Table.java
+
+      - name: Run multiplication table
+        env:
+          NUM: ${{ inputs.num }}
+        run: java Table "$NUM"
+
